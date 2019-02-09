@@ -97,7 +97,7 @@ module profile_2040(length) {
 
 module base() {
     module x_carriage_assembly() {
-        translate([0, sk20_rail_mount_offset+5+2, -sk20_depth]) {
+        translate([0, sk20_rail_mount_offset+z_carriage_plate_thickness+2, -sk20_depth]) {
             translate([0, 3*nozzle_width+608_bearing_od/2, 0]) {
                 for (i=[-1, 1])
                 translate([i*z_axis_smooth_rod_distance/2, 0, -0.1])
@@ -131,34 +131,6 @@ module base() {
                 }
             }
 
-            translate([-z_axis_base_width/2, 3*nozzle_width+608_bearing_od+3*nozzle_width, 0])
-            color("lightgrey")
-                cube([z_axis_base_width, 5, z_axis_smooth_rod_length]);
-            
-            echo("z-axis base plate w, d, h", z_axis_base_width, z_axis_smooth_rod_length, 5);
-
-            translate([0, 3*nozzle_width+608_bearing_od+3*nozzle_width+5+2+3*nozzle_width+608_bearing_od/2, x_axis_smooth_rod_distance/2+lm8uu_od/2+3*nozzle_width+m3_screw_head_dia+3*nozzle_width]) {
-                rotate([90, 90, 0])
-                translate([-anti_backlash_nut_width/2, -anti_backlash_nut_depth/2, -anti_backlash_nut_height/2])
-                    anti_backlash_nut();
-
-                for (i=[-1, 1])
-                for (j=[-1, 1])
-                translate([i*(lm8uu_length+0.2)/2, 0, j*x_axis_smooth_rod_distance/2])
-                rotate([0, 90, 0])
-                translate([0, 0, -lm8uu_length/2])
-                color("slategrey")
-                    cylinder(d=lm8uu_od, h=lm8uu_length+0.2, $fn=32);
-            }
-
-            translate([0, 3*nozzle_width+608_bearing_od/2+(z_axis_motor_belt_length-PI*gt2_pulley_20t_teeth_dia)/2, z_axis_smooth_rod_length-5]) {
-                translate([-nema17_width/2, -nema17_width/2, -stepper_motor_length])
-                    stepper_nema17();
-
-                translate([0, 0, 5+m8_washer_height])
-                    gt2_pulley_20t();
-            }
-
             translate([0, 608_bearing_od/2+3*nozzle_width, 0])
             color("blue")
                 z_axis_floating_bearing_block_base();
@@ -177,11 +149,42 @@ module base() {
                     z_axis_fixed_bearing_block_top();
             }
 
+            translate([0, 3*nozzle_width+608_bearing_od+3*nozzle_width]) {
+                translate([-z_axis_base_width/2, 0, 0])
+                color("lightgrey")
+                    cube([z_axis_base_width, x_carriage_plate_thickness, z_axis_smooth_rod_length]);
+
+                echo("z-axis base plate w, d, h", z_axis_base_width, z_axis_smooth_rod_length, x_carriage_plate_thickness);
+
+                translate([0, x_carriage_plate_thickness+2+3*nozzle_width+608_bearing_od/2, x_axis_smooth_rod_distance/2+lm8uu_od/2+3*nozzle_width+m3_screw_head_dia+3*nozzle_width]) {
+                    rotate([90, 90, 0])
+                    translate([-anti_backlash_nut_width/2, -anti_backlash_nut_depth/2, -anti_backlash_nut_height/2])
+                        anti_backlash_nut();
+
+                    for (i=[-1, 1])
+                    for (j=[-1, 1])
+                    translate([i*(lm8uu_length+0.2)/2, 0, j*x_axis_smooth_rod_distance/2])
+                    rotate([0, 90, 0])
+                    translate([0, 0, -lm8uu_length/2])
+                    color("slategrey")
+                        cylinder(d=lm8uu_od, h=lm8uu_length+0.2, $fn=32);
+                }
+
+            }
+            
+            translate([0, 3*nozzle_width+608_bearing_od/2+(z_axis_motor_belt_length-PI*gt2_pulley_20t_teeth_dia)/2, z_axis_smooth_rod_length-5]) {
+                translate([-nema17_width/2, -nema17_width/2, -stepper_motor_length])
+                    stepper_nema17();
+
+                translate([0, 0, 5+m8_washer_height])
+                    gt2_pulley_20t();
+            }
+
             translate([0, 0, z_axis_smooth_rod_length-5])
             color("blue")
                 z_axis_motor_holder();
 
-            translate([0, 3*nozzle_width+608_bearing_od+3*nozzle_width+5, x_axis_smooth_rod_distance/2+lm8uu_od/2+3*nozzle_width+m3_screw_head_dia+3*nozzle_width])
+            translate([0, 3*nozzle_width+608_bearing_od+3*nozzle_width+x_carriage_plate_thickness, x_axis_smooth_rod_distance/2+lm8uu_od/2+3*nozzle_width+m3_screw_head_dia+3*nozzle_width])
             color("blue")
             rotate([0, -90, 0])
             translate([0, 0, -lm8uu_length])
@@ -190,7 +193,7 @@ module base() {
     }
 
     module z_carriage_assembly() {
-        translate([0, sk20_rail_mount_offset+5+2+3*nozzle_width+608_bearing_od/2, profile_width+lm8uu_length-sk20_depth]) {
+        translate([0, sk20_rail_mount_offset+z_carriage_plate_thickness+2+3*nozzle_width+608_bearing_od/2, profile_width+lm8uu_length-sk20_depth]) {
             rotate([-90, 0, 180])
             translate([-anti_backlash_nut_width/2, -anti_backlash_nut_depth/2, -anti_backlash_nut_height/2])
                 anti_backlash_nut();
@@ -204,11 +207,11 @@ module base() {
 
         translate([-z_axis_base_width/2, sk20_rail_mount_offset, -sk20_depth])
         color("lightgrey")
-            cube([z_axis_base_width, 5, z_axis_carriage_height]);
+            cube([z_axis_base_width, z_carriage_plate_thickness, z_axis_carriage_height]);
         
-        echo("z-axis carriage plate w, d, h", z_axis_base_width, z_axis_carriage_height, 5);
+        echo("z-axis carriage plate w, d, h", z_axis_base_width, z_axis_carriage_height, z_carriage_plate_thickness);
 
-        translate([0, sk20_rail_mount_offset+5, profile_width-sk20_depth])
+        translate([0, sk20_rail_mount_offset+z_carriage_plate_thickness, profile_width-sk20_depth])
         color("blue")
             z_axis_bearing_mount();
 
@@ -223,7 +226,7 @@ module base() {
 
     module x_axis() {
         translate([0, y_axis_smooth_rod_length/2, z_axis_vertical_offset]) {
-            translate([0, sk20_rail_mount_offset+5+2+3*nozzle_width+608_bearing_od+3*nozzle_width+5+2+3*nozzle_width+608_bearing_od/2, 0]) {
+            translate([0, sk20_rail_mount_offset+z_carriage_plate_thickness+2+3*nozzle_width+608_bearing_od+3*nozzle_width+x_carriage_plate_thickness+2+3*nozzle_width+608_bearing_od/2, 0]) {
                 translate([0, 0, -sk20_depth+x_axis_smooth_rod_distance/2+lm8uu_od/2+3*nozzle_width+m3_screw_head_dia+3*nozzle_width]) {
                     for (i=[-1, 1])
                     translate([-0.1, 0, i*x_axis_smooth_rod_distance/2])
@@ -314,7 +317,7 @@ module base() {
             }
         }
         
-        echo("portal offset", y_axis_smooth_rod_length/2+sk20_rail_mount_offset+5+2+3*nozzle_width+608_bearing_od+3*nozzle_width+5+2+3*nozzle_width+608_bearing_od/2+608_bearing_od/2+3*nozzle_width);
+        echo("portal offset", y_axis_smooth_rod_length/2+sk20_rail_mount_offset+z_carriage_plate_thickness+2+3*nozzle_width+608_bearing_od+3*nozzle_width+x_carriage_plate_thickness+2+3*nozzle_width+608_bearing_od/2+608_bearing_od/2+3*nozzle_width);
     }
 
 	module y_axis() {

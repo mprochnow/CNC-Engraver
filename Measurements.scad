@@ -28,6 +28,9 @@ x_axis_motor_belt_length = 200;
 y_axis_motor_belt_length = 144;
 z_axis_motor_belt_length = 122;
 
+x_carriage_plate_thickness = 5; // TODO: fix issue with z-axis motor holder when plate thickness is not 5
+z_carriage_plate_thickness = 5;
+
 stepper_motor_length = 40;
 stepper_motor_overall_length = stepper_motor_length + nema17_shaft_length;
 stepper_adapter_height = 50;
