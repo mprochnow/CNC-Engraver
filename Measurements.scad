@@ -194,16 +194,6 @@ module micromot_50() {
     }
 }
 
-module laser_module() {
-    translate([-15, -15, 0])
-    color("black")
-        cube([30, 30, 45]);
-    
-    translate([0, 0, -10])
-    color("black")
-        cylinder(d=15, h=10, $fn=16);
-}
-
 module sk20() {
 	color("lightgrey")
     difference() {
@@ -216,8 +206,8 @@ module sk20() {
         }
     
         for (i=[-1, 1])
-        translate([i*22.5, 0, -0.1])
-            cylinder(d=6, h=10.2, $fn=16);
+        translate([i*sk20_mount_screw_distance/2, 0, -0.1])
+            cylinder(d=sk20_mount_screw_dia, h=10.2, $fn=16);
         
         translate([0, -10.1, 31])
         rotate([-90, 0, 0])

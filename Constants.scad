@@ -34,6 +34,9 @@ m5_nut_height = 4;
 m5_screw_head_dia = 8.5;
 m5_screw_head_height = 5;
 
+m5_flat_head_screw_head_dia = 9.5;
+m5_flat_head_screw_head_height = 2.75;
+
 m8_nut_height = 6.5;
 m8_nut_width = 13;
 m8_lock_nut_height = 8;
@@ -83,6 +86,10 @@ gt2_pulley_20t_height = 16;
 
 sk20_height = 51;
 sk20_depth = 20;
+sk20_base_width = 60;
+sk20_base_height = 10;
+sk20_mount_screw_dia = 6;
+sk20_mount_screw_distance = 45;
 sk20_rail_mount_offset = 31;
 
 8mm_collar_dia = 16;
@@ -99,3 +106,9 @@ arduino_uno_cnc_shield_stepper_driver_height = 33;
 
 usb_type_a_plug_width = 12;
 usb_type_a_plug_height = 11.9;
+
+laser_module_width = 30;
+laser_module_depth = 30;
+laser_module_height = 45;
+laser_module_mount_screw_distance = 20;
+laser_module_mount_screw_distance2 = 40;

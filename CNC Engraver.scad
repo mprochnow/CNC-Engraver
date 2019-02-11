@@ -10,7 +10,7 @@ use <X Axis Parts.scad>
 use <Y Axis Parts.scad>
 use <Z Axis Parts.scad>
 use <Dust Shoe.scad>
-
+use <Laser.scad>
 
 module stepper_nema17() {
 	color("darkgrey")
@@ -215,13 +215,27 @@ module base() {
         color("blue")
             z_axis_bearing_mount();
 
-        translate([0, sk20_rail_mount_offset, -sk20_depth/2])
-        rotate([90, 0, 0])
-            sk20();
+        *union() {
+            translate([0, sk20_rail_mount_offset, -sk20_depth/2])
+            rotate([90, 0, 0])
+                sk20();
 
-        translate([0, -dust_shoe_depth+16, -dust_shoe_height+4*nozzle_width])
-        color("blue")
-            dust_shoe();
+            micromot_50();
+
+            translate([0, -dust_shoe_depth+16, -dust_shoe_height+4*nozzle_width])
+            color("blue")
+                dust_shoe();
+        }
+
+        union() {
+            translate([0, sk20_rail_mount_offset, -sk20_depth])
+            rotate([90, 0, 0])
+            color("blue")
+                laser_module_mount();
+            
+            translate([0, 0, -sk20_depth+laser_module_height/2-(laser_module_mount_screw_distance2-laser_module_mount_screw_distance)])
+                laser_module();
+        }
     }
 
     module x_axis() {
@@ -472,11 +486,9 @@ module base() {
             translate([0, 0, z_axis_vertical_offset])
                 x_carriage_assembly();
 
-            translate([0, 0, 00]) {
+            translate([0, 0, -0]) {
                 translate([0, 0, z_axis_vertical_offset]) {
                     z_carriage_assembly();
-                    micromot_50();
-                    //laser_module();
                 }
             }
         }
