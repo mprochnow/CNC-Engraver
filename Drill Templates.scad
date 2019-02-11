@@ -85,11 +85,8 @@ module z_axis_carriage_drill_template() {
         rotate([-90, 0, 0])
             cylinder(d=dia, h=2+3*nozzle_width+608_bearing_od/2+lm8uu_od/2+3*nozzle_width+0.2, $fn=32);
             
-        translate([0, z_axis_carriage_height, 0])
-        rotate([90, 0, 0])
         for (i=[-1, 1])
-        translate([i*anti_backlash_nut_screw_distance/2, -0.1, lm8uu_length+anti_backlash_nut_depth/2+anti_backlash_nut_screw_offset])
-        rotate([-90, 0, 0])
+        translate([i*anti_backlash_nut_screw_distance/2, z_axis_carriage_height-(lm8uu_length+anti_backlash_nut_depth/2+anti_backlash_nut_screw_offset), -0.1])
             cylinder(d=dia, h=2+3*nozzle_width+608_bearing_od/2, $fn=32);
     }
 }
